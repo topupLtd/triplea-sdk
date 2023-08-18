@@ -20,5 +20,8 @@ class ApiClient {
         $this->sandbox = $sandbox;
     }
 
+    public function getToken() {
+        return $this->token;
+    }
 
 }
