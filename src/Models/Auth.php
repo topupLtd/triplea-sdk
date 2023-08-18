@@ -43,10 +43,14 @@ class Auth {
                 'headers'       => $this->setHeaders()
             ]);
 
-            return $response->getBody();
+            return $this->_filterToken($response->getBody());
             
         } catch (GuzzleException $ex) {
             throw $ex;
         }
+    }
+
+    public function _filterToken($response) {
+        return json_decode($response, true)['access_token'];
     }
 }
