@@ -2,6 +2,8 @@
 
 namespace Topup\Triplea;
 
+use Topup\Triplea\Models\Auth;
+
 class ApiClient {
 
     protected $client_id;

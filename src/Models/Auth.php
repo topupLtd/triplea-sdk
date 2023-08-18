@@ -1,6 +1,6 @@
 <?php
 
-namespace Topup\Triplea;
+namespace Topup\Triplea\Models;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
@@ -14,8 +14,8 @@ class Auth {
 
     public function __construct()
     {
-        $this->client_id        = config('triplea.client_id');
-        $this->client_secret    = config('triplea.client_secret');
+        $this->client_id        = config('triplea.client_id', 'oacid-cllginqu11ogqpois2bov81ye');
+        $this->client_secret    = config('triplea.client_secret', '4bf1f48cb6167aafd52b701f7895981d5d7a1815b4d5b3531a70a8653eb3de09');
         $this->client           = new Client();
     }
 
