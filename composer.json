@@ -1,0 +1,23 @@
+{
+    "name": "topup/triplea",
+    "description": "Triple A OpenAPI SDK for Laravel",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Md Shanewyz Molla",
+            "email": "molla.cse@gmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Topup\\Triplea\\": "src"
+        }
+    },
+    "require-dev": {
+        "orchestra/testbench": "^4.0"
+    }
+}
