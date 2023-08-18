@@ -1,5 +1,7 @@
 <?php
 
+namespace Topup\Triplea;
+
 use Illuminate\Support\ServiceProvider;
 
 class TripleaServiceProvider extends ServiceProvider {
