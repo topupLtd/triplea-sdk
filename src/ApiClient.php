@@ -3,6 +3,7 @@
 namespace Topup\Triplea;
 
 use Topup\Triplea\Models\Auth;
+use Topup\Triplea\Models\Payment;
 
 class ApiClient {
 
@@ -10,11 +11,14 @@ class ApiClient {
     protected $client_secret;
     protected $sandbox;
     protected $token;
+    protected $payment;
 
     public function __construct()
     {
         $this->token            = (new Auth)->getToken();
         $this->sandbox          = false;
+        $this->payment          = (new Payment);
+        $this->payment->setToken($this->token);
     }
 
 
