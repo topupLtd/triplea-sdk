@@ -7,6 +7,11 @@ use Exception;
 Trait MakePaymentTrait {
 
     private function validate() {
+
+
+        if(!$this->merchant_key)
+            throw new Exception('Merchant key is not found!');
+
         if(!$this->order_currency)
             throw new Exception('Order Currency not found!');
 
@@ -30,11 +35,16 @@ Trait MakePaymentTrait {
             'merchant_key'      => $this->merchant_key,
             'order_currency'    => $this->order_currency,
             'order_amount'      => $this->order_amount,
-            'order_id'          => $this->order_id,
             'shipping_cost'     => $this->shipping_cost,
             'shipping_discount' => $this->shipping_discount,
             'tax_cost'          => $this->tax_cost
         ];
+
+        if($this->order_id) {
+            $body = array_merge($body, [
+                'order_id' => $this->order_id
+            ]);
+        }
 
         if($this->notify_url) {
             $body = array_merge($body, [
