@@ -17,6 +17,7 @@ class ApiClient {
         $this->token            = (new Auth)->getToken();
         $this->payment          = (new Payment);
         $this->payment->setToken($this->token);
+        $this->payment->setSandbox(config('triplea.sandbox'));
     }
 
 
