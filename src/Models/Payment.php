@@ -163,11 +163,16 @@ class Payment {
         if(empty($this->items))
             throw new Exception('Item is required');
 
+
+        $body = [
+            'type' => $this->payment_type
+        ];
+
         if($this->payer) {
-            return $this->payer->getPayer();
+            $body = [$body, ...$this->payer->getPayer()];
         }
 
-        return 'True';
+        return $body;
 
     }
 
