@@ -15,5 +15,8 @@ return [
     'sandbox'           => env('TRIPLEA_SANDBOX', false),
 
     // Set payment type triplea or widget
-    'payment_type'      => env('TRIPLEA_PAYMENT_TYPE', 'triplea')
+    'payment_type'      => env('TRIPLEA_PAYMENT_TYPE', 'triplea'),
+
+    // Set Merchant Key
+    'merchant_key'      => env('TRIPLEA_MERCHANT_KEY'),
 ];
