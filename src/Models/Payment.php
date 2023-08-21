@@ -59,7 +59,7 @@ class Payment {
     }
 
     public function setSandbox($sandbox = false) {
-        $this->sandbox = false;
+        $this->sandbox = $sandbox;
         return $this;
     }
 
