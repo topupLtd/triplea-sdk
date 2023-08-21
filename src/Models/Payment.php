@@ -51,6 +51,7 @@ class Payment {
 
     public function setPayer(Payer $payer) {
         $this->payer = $payer;
+        return $this;
     }
 
 
