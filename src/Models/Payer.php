@@ -25,15 +25,21 @@ class Payer {
     }
 
     public function getPayer() {
-        return [
+        $payer = [
             'payer_id' => $this->id,
             'payer_name' => $this->name,
             'payer_email' => $this->email,
             'payer_phone' => $this->phone,
             'payer_address' => $this->address,
-            'payer_poi' => $this->poi,
-            'payer_ip' => $this->ip,
         ];
+
+        if($this->poi)
+            $payer['payer_poi'] = $this->poi;
+
+        if($this->ip)
+            $payer['ip'] = $this->ip;
+
+        return $payer;
     }
 
 }
