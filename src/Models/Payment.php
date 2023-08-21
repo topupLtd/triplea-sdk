@@ -26,6 +26,8 @@ class Payment {
 
     protected $webhook_data;
 
+    protected $payer;
+
     public function __construct()
     {
         $this->merchant_key = config('triplea.merchant_key');
@@ -44,6 +46,11 @@ class Payment {
         $this->shipping_cost = 0;
         $this->shipping_discount = 0;
         $this->webhook_data = null;
+        $this->payer = false;
+    }
+
+    public function setPayer(Payer $payer) {
+        $this->payer = $payer;
     }
 
 
@@ -154,6 +161,10 @@ class Payment {
 
         if(empty($this->items))
             throw new Exception('Item is required');
+
+        if($this->payer) {
+            return $this->payer->getPayer();
+        }
 
         return 'True';
 
