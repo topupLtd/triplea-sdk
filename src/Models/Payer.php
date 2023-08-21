@@ -4,13 +4,13 @@ namespace Topup\Triplea\Models;
 
 class Payer {
 
-    public $id;
-    public $name;
-    public $email;
-    public $phone;
-    public $address;
-    public $poi;
-    public $ip;
+    protected $id;
+    protected $name;
+    protected $email;
+    protected $phone;
+    protected $address;
+    protected $poi;
+    protected $ip;
 
 
     public function __construct($id, $name, $email, $phone, $address, $ip=false, $poi=false)

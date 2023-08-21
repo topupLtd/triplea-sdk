@@ -3,6 +3,7 @@
 namespace Topup\Triplea\Models;
 
 use Exception;
+use Topup\Triplea\Services\MakePaymentService;
 
 class Payment {
 
@@ -28,6 +29,8 @@ class Payment {
 
     protected $payer;
 
+    protected $paymentService;
+
     public function __construct()
     {
         $this->merchant_key = config('triplea.merchant_key');
@@ -47,6 +50,8 @@ class Payment {
         $this->shipping_discount = 0;
         $this->webhook_data = null;
         $this->payer = false;
+
+        $this->paymentService = new MakePaymentService();
     }
 
     public function setPayer(Payer $payer) {
@@ -74,14 +79,8 @@ class Payment {
         return $this;
     }
 
-    public function addItem($sku, $label, $quantity, $amount) {
-        $this->items[] = [
-            'sku'       => $sku,
-            'label'     => $label,
-            'quantity'  => $quantity,
-            'amount'    => $amount
-        ];
-
+    public function addItem(Item $item) {
+        $this->items[] = $item->getItem();
         return $this;
     }
 
@@ -174,6 +173,13 @@ class Payment {
 
         return $body;
 
+    }
+
+
+    public function create() {
+        $this->paymentService->validate();
+
+        return 'OK';
     }
 
 }
