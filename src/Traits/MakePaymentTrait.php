@@ -40,6 +40,12 @@ Trait MakePaymentTrait {
             'tax_cost'          => $this->tax_cost
         ];
 
+        if($this->sandbox) {
+            $body = array_merge($body, [
+                'sandbox' => $this->sandbox
+            ]);
+        }
+
         if($this->order_id) {
             $body = array_merge($body, [
                 'order_id' => $this->order_id

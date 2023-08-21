@@ -32,7 +32,7 @@ class Payment {
 
     protected $payer;
 
-    protected $paymentService;
+    protected $sandbox;
 
     public function __construct()
     {
@@ -54,6 +54,13 @@ class Payment {
         $this->tax_cost = 0;
         $this->webhook_data = null;
         $this->payer = false;
+
+        $this->sandbox = false;
+    }
+
+    public function setSandbox($sandbox = false) {
+        $this->sandbox = false;
+        return $this;
     }
 
     public function setPayer(Payer $payer) {

@@ -9,21 +9,20 @@ class ApiClient {
 
     protected $client_id;
     protected $client_secret;
-    protected $sandbox;
     protected $token;
     public $payment;
 
     public function __construct()
     {
         $this->token            = (new Auth)->getToken();
-        $this->sandbox          = false;
         $this->payment          = (new Payment);
         $this->payment->setToken($this->token);
     }
 
 
     public function setSandbox($sandbox = false) {
-        $this->sandbox = $sandbox;
+        $this->payment->setSandbox($sandbox);
+        return $this;
     }
 
     public function getToken() {
