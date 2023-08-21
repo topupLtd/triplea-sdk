@@ -66,6 +66,17 @@ class Payment {
         return $this;
     }
 
+    public function addItem($sku, $label, $quantity, $amount) {
+        $this->items[] = [
+            'sku'       => $sku,
+            'label'     => $label,
+            'quantity'  => $quantity,
+            'amount'    => $amount
+        ];
+
+        return $this;
+    }
+
     public function setPaymentType($type) {
         $this->payment_type = $type;
         return $this;
@@ -140,6 +151,9 @@ class Payment {
 
         if(!$this->cancel_url)
             throw new Exception('Cancel url is required!');
+
+        if(empty($this->items))
+            throw new Exception('Item is required');
 
         return 'True';
 
