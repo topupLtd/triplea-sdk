@@ -192,8 +192,7 @@ class Payment {
 
     public function create() {
         $this->validate();
-
-        return $this->makeBody();
+        return $this->createSession();
     }
 
 }

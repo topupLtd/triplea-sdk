@@ -3,6 +3,7 @@
 namespace Topup\Triplea\Services;
 
 use Exception;
+use GuzzleHttp\Client;
 
 Trait MakePaymentTrait {
 
@@ -102,6 +103,25 @@ Trait MakePaymentTrait {
 
         return $body;
 
+    }
+
+    private function makeHeaders() {
+        return [
+            'Accept' => 'application/json, application/xml',
+            'Authorization' => 'Bearer '.$this->token,
+            'Content-Type' => 'application/json',
+        ];
+    }
+
+    private function createSession() {
+        $client = new Client();
+
+        $response = $client->post('https://api.triple-a.io/api/v2/payment', [
+            'body'      => $this->makeBody(),
+            'headers'   => $this->makeHeaders()
+        ]);
+
+        return $response;
     }
 
 }
