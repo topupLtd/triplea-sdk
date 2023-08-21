@@ -3,9 +3,11 @@
 namespace Topup\Triplea\Models;
 
 use Exception;
-use Topup\Triplea\Services\MakePaymentService;
+use Topup\Triplea\Services\MakePaymentTrait;
 
 class Payment {
+
+    use MakePaymentTrait;
 
     protected $token;
     protected $success_url;
@@ -24,6 +26,7 @@ class Payment {
     protected $cart;
     protected $shipping_cost;
     protected $shipping_discount;
+    protected $tax_cost;
 
     protected $webhook_data;
 
@@ -48,10 +51,9 @@ class Payment {
         $this->items = [];
         $this->shipping_cost = 0;
         $this->shipping_discount = 0;
+        $this->tax_cost = 0;
         $this->webhook_data = null;
         $this->payer = false;
-
-        $this->paymentService = new MakePaymentService();
     }
 
     public function setPayer(Payer $payer) {
@@ -112,6 +114,11 @@ class Payment {
 
     public function setShippingDiscount($shipping_discount) {
         $this->shipping_discount = $shipping_discount;
+        return $this;
+    }
+
+    public function setTaxCost($tax_cost) {
+        $this->tax_cost = $tax_cost;
         return $this;
     }
 
@@ -177,9 +184,9 @@ class Payment {
 
 
     public function create() {
-        $this->paymentService->validate();
+        $this->validate();
 
-        return 'OK';
+        return $this->makeBody();
     }
 
 }
