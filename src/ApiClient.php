@@ -11,7 +11,7 @@ class ApiClient {
     protected $client_secret;
     protected $sandbox;
     protected $token;
-    protected $payment;
+    public $payment;
 
     public function __construct()
     {
