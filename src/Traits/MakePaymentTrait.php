@@ -16,6 +16,9 @@ Trait MakePaymentTrait {
         if(!$this->order_currency)
             throw new Exception('Order Currency not found!');
 
+        if(!$this->order_id)
+            throw new Exception('Order ID is required!');
+
         if(!$this->order_amount)
             throw new Exception('Payment amount is required!');
 
@@ -35,10 +38,7 @@ Trait MakePaymentTrait {
             'type'              => $this->payment_type,
             'merchant_key'      => $this->merchant_key,
             'order_currency'    => $this->order_currency,
-            'order_amount'      => $this->order_amount,
-            'shipping_cost'     => $this->shipping_cost,
-            'shipping_discount' => $this->shipping_discount,
-            'tax_cost'          => $this->tax_cost
+            'order_amount'      => $this->order_amount
         ];
 
         if($this->sandbox) {
@@ -85,7 +85,13 @@ Trait MakePaymentTrait {
 
         if(!empty($this->items)) {
             $body = array_merge($body, [
-                'cart' => $this->items
+                'cart' => [
+                    'items' => $this->items
+                ],
+
+                'shipping_cost'     => $this->shipping_cost,
+                'shipping_discount' => $this->shipping_discount,
+                'tax_cost'          => $this->tax_cost
             ]);
         }
 
@@ -101,7 +107,7 @@ Trait MakePaymentTrait {
         }
 
 
-        return $body;
+        return json_encode($body, JSON_UNESCAPED_SLASHES);
 
     }
 
@@ -121,7 +127,7 @@ Trait MakePaymentTrait {
             'headers'   => $this->makeHeaders()
         ]);
 
-        return $response;
+        return json_decode($response->getBody(), true);
     }
 
 }

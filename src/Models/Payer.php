@@ -13,7 +13,7 @@ class Payer {
     protected $ip;
 
 
-    public function __construct($id, $name, $email, $phone, $address, $ip=false, $poi=false)
+    public function __construct($id, $name=false, $email=false, $phone=false, $address=false, $ip=false, $poi=false)
     {
         $this->id       = $id;
         $this->name     = $name;
@@ -26,12 +26,20 @@ class Payer {
 
     public function getPayer() {
         $payer = [
-            'payer_id' => $this->id,
-            'payer_name' => $this->name,
-            'payer_email' => $this->email,
-            'payer_phone' => $this->phone,
-            'payer_address' => $this->address,
+            'payer_id' => $this->id
         ];
+
+        if($this->name)
+            $payer['payer_name'] = $this->name;
+        
+        if($this->email)
+            $payer['payer_email'] = $this->email;
+    
+        if($this->phone)
+            $payer['payer_phone'] = $this->phone;
+
+        if($this->address)
+            $payer['payer_address'] = $this->address;
 
         if($this->poi)
             $payer['payer_poi'] = $this->poi;

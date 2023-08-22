@@ -10,7 +10,7 @@ class Item {
     protected $amount;
 
 
-    public function __construct($sku, $label, $quantity, $amount)
+    public function __construct(string $sku, string $label, int $quantity, float $amount)
     {
         $this->sku      = $sku;
         $this->label    = $label;
