@@ -4,11 +4,13 @@ namespace Topup\Triplea;
 
 class Logger {
 
-    protected static $is_enable = config('triplea.logger');
+    private static function isEnable() {
+        return config('triplea.logger');
+    }
 
 
     public static function make(string $message, array $values = []) {
-        if(self::$is_enable)
+        if(self::isEnable())
             logger($message, $values);
     }
 
