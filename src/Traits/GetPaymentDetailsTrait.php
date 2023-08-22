@@ -5,12 +5,13 @@ namespace Topup\Triplea\Traits;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Topup\Triplea\Logger;
+use Topup\Triplea\Middlewares\GuzzleMiddleware;
 
 trait GetPaymentDetailsTrait {
 
     public function getDetails($payment_reference) {
 
-        $client = new Client();
+        $client = new Client(['handler' => GuzzleMiddleware::handlerStack()]);
         Logger::make('Triple-A: Payment Details Init');
 
         try {

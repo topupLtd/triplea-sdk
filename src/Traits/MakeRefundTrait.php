@@ -6,6 +6,7 @@ use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Topup\Triplea\Logger;
+use Topup\Triplea\Middlewares\GuzzleMiddleware;
 
 trait MakeRefundTrait {
 
@@ -56,7 +57,7 @@ trait MakeRefundTrait {
 
     public function createSession() {
 
-        $client = new Client();
+        $client = new Client(['handler' => GuzzleMiddleware::handlerStack()]);
         Logger::make('Triple-A: Refund Init');
 
         try {
@@ -66,11 +67,51 @@ trait MakeRefundTrait {
             ]);
 
 
-            Logger::make('Triple-A: Refund response = ', [$response]);
+            Logger::make('Triple-A: Refund response = ', [$response->getBody()]);
             return json_decode($response->getBody(), true);
 
         } catch (GuzzleException $ex) {
             Logger::make('Triple-A: Refund error = ', [$ex->getMessage()]);
+            throw $ex;
+        }
+    }
+
+
+    public function refundDetails($payment_reference) {
+        $client = new Client(['handler' => GuzzleMiddleware::handlerStack()]);
+        Logger::make('Triple-A: Refund Details Calling');
+
+        try {
+            $response = $client->get('https://api.triple-a.io/api/v2/payment/'.$payment_reference.'/refunds', [
+                'headers' => $this->makeHeaders()
+            ]);
+
+            Logger::make('Triple-A: Refund details response = ', [$response->getBody()]);
+            return json_decode($response->getBody(), true);
+
+        } catch (GuzzleException $ex) {
+
+            Logger::make('Triple-A: Refund details error = ', [$ex->getMessage()]);
+            throw $ex;
+        }
+    }
+
+
+    public function refundCancel($payment_reference) {
+        $client = new Client(['handler' => GuzzleMiddleware::handlerStack()]);
+        Logger::make('Triple-A: Refund cancel Calling');
+
+        try {
+            $response = $client->put('https://api.triple-a.io/api/v2/payout/refund/'.$payment_reference.'/cancel', [
+                'headers' => $this->makeHeaders()
+            ]);
+
+            Logger::make('Triple-A: Refund cancel response = ', [$response->getBody()]);
+            return json_decode($response->getBody(), true);
+
+        } catch (GuzzleException $ex) {
+
+            Logger::make('Triple-A: Refund cancel error = ', [$ex->getMessage()]);
             throw $ex;
         }
     }

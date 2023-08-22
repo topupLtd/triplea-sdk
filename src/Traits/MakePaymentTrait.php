@@ -6,6 +6,7 @@ use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Topup\Triplea\Logger;
+use Topup\Triplea\Middlewares\GuzzleMiddleware;
 
 Trait MakePaymentTrait {
 
@@ -122,7 +123,7 @@ Trait MakePaymentTrait {
     }
 
     private function createSession() {
-        $client = new Client();
+        $client = new Client(['handler' => GuzzleMiddleware::handlerStack()]);
 
         Logger::make('Triple-A: Payment Initialized!');
 
