@@ -3,10 +3,11 @@
 namespace Topup\Triplea\Models;
 
 use Topup\Triplea\Traits\MakeRefundTrait;
+use Topup\Triplea\Traits\ResponseTrait;
 
 class Refund {
 
-    use MakeRefundTrait;
+    use MakeRefundTrait, ResponseTrait;
 
     protected $payment_reference;
     protected $email;

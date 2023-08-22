@@ -4,6 +4,7 @@ namespace Topup\Triplea\Traits;
 
 use Exception;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use Topup\Triplea\Logger;
 use Topup\Triplea\Middlewares\GuzzleMiddleware;
@@ -68,11 +69,11 @@ trait MakeRefundTrait {
 
 
             Logger::make('Triple-A: Refund response = ', [$response->getBody()]);
-            return json_decode($response->getBody(), true);
+            return $this->sendResponse($response->getBody(), $response->getStatusCode());
 
-        } catch (GuzzleException $ex) {
-            Logger::make('Triple-A: Refund error = ', [$ex->getMessage()]);
-            throw $ex;
+        } catch (ClientException $ex) {
+            Logger::make('Triple-A: Refund error = ', [$ex->getResponse()->getBody(true)]);
+            return $this->sendResponse($ex->getResponse()->getBody(true), $ex->getResponse()->getStatusCode());
         }
     }
 
@@ -87,12 +88,12 @@ trait MakeRefundTrait {
             ]);
 
             Logger::make('Triple-A: Refund details response = ', [$response->getBody()]);
-            return json_decode($response->getBody(), true);
+            return $this->sendResponse($response->getBody(), $response->getStatusCode());
 
-        } catch (GuzzleException $ex) {
+        } catch (ClientException $ex) {
 
-            Logger::make('Triple-A: Refund details error = ', [$ex->getMessage()]);
-            throw $ex;
+            Logger::make('Triple-A: Refund details error = ', [$ex->getResponse()->getBody(true)]);
+            return $this->sendResponse($ex->getResponse()->getBody(true), $ex->getResponse()->getStatusCode());
         }
     }
 
@@ -107,12 +108,12 @@ trait MakeRefundTrait {
             ]);
 
             Logger::make('Triple-A: Refund cancel response = ', [$response->getBody()]);
-            return json_decode($response->getBody(), true);
+            return $this->sendResponse($response->getBody(), $response->getStatusCode());
 
-        } catch (GuzzleException $ex) {
+        } catch (ClientException $ex) {
 
-            Logger::make('Triple-A: Refund cancel error = ', [$ex->getMessage()]);
-            throw $ex;
+            Logger::make('Triple-A: Refund cancel error = ', [$ex->getResponse()->getBody(true)]);
+            return $this->sendResponse($ex->getResponse()->getBody(true), $ex->getResponse()->getStatusCode());
         }
     }
 }

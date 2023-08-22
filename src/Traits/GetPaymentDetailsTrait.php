@@ -3,6 +3,7 @@
 namespace Topup\Triplea\Traits;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use Topup\Triplea\Logger;
 use Topup\Triplea\Middlewares\GuzzleMiddleware;
@@ -24,10 +25,10 @@ trait GetPaymentDetailsTrait {
 
 
             Logger::make('Triple-A: Payment Details Response = ', [$response]);
-            return json_decode($response->getBody(), true);
-        } catch (GuzzleException $ex) {
-            Logger::make('Triple-A: Payment Details Error = ', [$ex->getMessage()]);
-            throw $ex;
+            return $this->sendResponse($response->getBody(), $response->getStatusCode());
+        } catch (ClientException $ex) {
+            Logger::make('Triple-A: Payment Details Error = ', [$ex->getResponse()->getBody(true)]);
+            return $this->sendResponse($ex->getResponse()->getBody(true), $ex->getResponse()->getStatusCode());
         }
     }
 

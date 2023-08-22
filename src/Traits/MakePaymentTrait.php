@@ -4,6 +4,7 @@ namespace Topup\Triplea\Traits;
 
 use Exception;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use Topup\Triplea\Logger;
 use Topup\Triplea\Middlewares\GuzzleMiddleware;
@@ -137,9 +138,9 @@ Trait MakePaymentTrait {
 
             return $this->sendResponse($response->getBody(), $response->getStatusCode());
             
-        } catch (GuzzleException $ex) {
-            Logger::make('Triple-A: Payment Error = ', [$ex->getMessage()]);
-            throw $ex;
+        } catch (ClientException $ex) {
+            Logger::make('Triple-A: Payment Error = ', [$ex->getResponse()->getBody(true)]);
+            return $this->sendResponse($ex->getResponse()->getBody(true), $ex->getResponse()->getStatusCode());
         }
     }
 
