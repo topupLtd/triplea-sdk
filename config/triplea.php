@@ -19,4 +19,6 @@ return [
 
     // Set Merchant Key
     'merchant_key'      => env('TRIPLEA_MERCHANT_KEY'),
+    
+    'logger'            => env('TRIPLEA_LOGGER', true),
 ];

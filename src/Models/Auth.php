@@ -4,6 +4,7 @@ namespace Topup\Triplea\Models;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Topup\Triplea\Logger;
 
 class Auth {
 
@@ -36,6 +37,8 @@ class Auth {
     }
 
     public function getToken() {
+
+        Logger::make('Triple-A: Authenticatino initializing!');
         
         try {
             $response = $this->client->post('https://api.triple-a.io/api/v2/oauth/token', [
@@ -51,6 +54,7 @@ class Auth {
     }
 
     public function _filterToken($response) {
+        Logger::make('Triple-A: Authentication response = ', [$response]);
         return json_decode($response, true)['access_token'];
     }
 }
