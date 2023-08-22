@@ -5,10 +5,11 @@ namespace Topup\Triplea\Models;
 use Exception;
 use Topup\Triplea\Traits\GetPaymentDetailsTrait;
 use Topup\Triplea\Traits\MakePaymentTrait;
+use Topup\Triplea\Traits\ResponseTrait;
 
 class Payment {
 
-    use MakePaymentTrait, GetPaymentDetailsTrait;
+    use MakePaymentTrait, GetPaymentDetailsTrait, ResponseTrait;
 
     protected $token;
     protected $success_url;

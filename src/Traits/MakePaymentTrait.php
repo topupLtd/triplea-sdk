@@ -133,8 +133,10 @@ Trait MakePaymentTrait {
                 'headers'   => $this->makeHeaders()
             ]);
     
-            Logger::make('Triple-A: Payment Response = ', [$response]);
-            return json_decode($response->getBody(), true);
+            Logger::make('Triple-A: Payment Response = ', [$response->getStatusCode(), $response->getBody()]);
+
+            return $this->sendResponse($response->getBody(), $response->getStatusCode());
+            
         } catch (GuzzleException $ex) {
             Logger::make('Triple-A: Payment Error = ', [$ex->getMessage()]);
             throw $ex;
