@@ -3,7 +3,7 @@
 namespace Topup\Triplea\Models;
 
 use Exception;
-use GetPaymentDetailsTrait;
+use Topup\Triplea\Traits\GetPaymentDetailsTrait;
 use Topup\Triplea\Traits\MakePaymentTrait;
 
 class Payment {
