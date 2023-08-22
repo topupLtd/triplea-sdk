@@ -78,12 +78,12 @@ trait MakeRefundTrait {
     }
 
 
-    public function refundDetails($payment_reference) {
+    public function refundDetails($payout_reference) {
         $client = new Client(['handler' => GuzzleMiddleware::handlerStack()]);
         Logger::make('Triple-A: Refund Details Calling');
 
         try {
-            $response = $client->get('https://api.triple-a.io/api/v2/payment/'.$payment_reference.'/refunds', [
+            $response = $client->get('https://api.triple-a.io/api/v2/payment/'.$payout_reference.'/refunds', [
                 'headers' => $this->makeHeaders()
             ]);
 
@@ -98,12 +98,12 @@ trait MakeRefundTrait {
     }
 
 
-    public function refundCancel($payment_reference) {
+    public function refundCancel($payout_reference) {
         $client = new Client(['handler' => GuzzleMiddleware::handlerStack()]);
         Logger::make('Triple-A: Refund cancel Calling');
 
         try {
-            $response = $client->put('https://api.triple-a.io/api/v2/payout/refund/'.$payment_reference.'/cancel', [
+            $response = $client->put('https://api.triple-a.io/api/v2/payout/refund/'.$payout_reference.'/cancel', [
                 'headers' => $this->makeHeaders()
             ]);
 
