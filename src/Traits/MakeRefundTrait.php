@@ -60,7 +60,7 @@ trait MakeRefundTrait {
         try {
             $response = $client->post('https://api.triple-a.io/api/v2/payout/refund/local', [
                 'headers'   => $this->makeHeaders(),
-                'boxy'      => $this->makeBody()
+                'body'      => $this->makeBody()
             ]);
 
             return json_decode($response->getBody(), true);

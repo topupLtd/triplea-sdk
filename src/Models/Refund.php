@@ -68,7 +68,7 @@ class Refund {
 
     public function create() {
         $this->validate();
-        $this->createSession();
+        return $this->createSession();
     }
 
 }
