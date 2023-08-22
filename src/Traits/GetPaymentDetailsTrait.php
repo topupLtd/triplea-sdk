@@ -11,7 +11,12 @@ trait GetPaymentDetailsTrait {
 
         $client = new Client();
         try {
-            $response = $client->get('https://api.triple-a.io/api/v2/payment/'.$payment_reference);
+            $response = $client->get('https://api.triple-a.io/api/v2/payment/'.$payment_reference, [
+                'headers' => [
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer '.$this->token
+                ]
+            ]);
             return json_decode($response->getBody(), true);
         } catch (GuzzleException $ex) {
             throw $ex;
