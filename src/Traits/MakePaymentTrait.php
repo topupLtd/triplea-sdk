@@ -86,12 +86,12 @@ Trait MakePaymentTrait {
         if(!empty($this->items)) {
             $body = array_merge($body, [
                 'cart' => [
-                    'items' => $this->items
-                ],
+                    'items'             => $this->items,
+                    'shipping_cost'     => $this->shipping_cost,
+                    'shipping_discount' => $this->shipping_discount,
+                    'tax_cost'          => $this->tax_cost
+                ]
 
-                'shipping_cost'     => $this->shipping_cost,
-                'shipping_discount' => $this->shipping_discount,
-                'tax_cost'          => $this->tax_cost
             ]);
         }
 
