@@ -31,7 +31,7 @@ trait MakeRefundTrait {
         $body = [
             'payment_reference' => $this->payment_reference,
             'email'             => $this->email,
-            'refund_amount'     => $this->refund_amounts
+            'refund_amount'     => $this->refund_amount
         ];
 
         if($this->remarks)
