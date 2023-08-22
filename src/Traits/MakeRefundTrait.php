@@ -5,6 +5,7 @@ namespace Topup\Triplea\Traits;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Topup\Triplea\Logger;
 
 trait MakeRefundTrait {
 
@@ -56,6 +57,7 @@ trait MakeRefundTrait {
     public function createSession() {
 
         $client = new Client();
+        Logger::make('Triple-A: Refund Init');
 
         try {
             $response = $client->post('https://api.triple-a.io/api/v2/payout/refund/local', [
@@ -63,9 +65,12 @@ trait MakeRefundTrait {
                 'body'      => $this->makeBody()
             ]);
 
+
+            Logger::make('Triple-A: Refund response = ', [$response]);
             return json_decode($response->getBody(), true);
 
         } catch (GuzzleException $ex) {
+            Logger::make('Triple-A: Refund error = ', [$ex->getMessage()]);
             throw $ex;
         }
     }

@@ -44,7 +44,7 @@ class Payment {
         $this->success_url = false;
         $this->cancel_url = false;
 
-        $this->payment_type = 'triplea';
+        $this->payment_type = config('triplea.payment_type');;
         $this->order_currency = 'USD';
         $this->order_amount = false;
         $this->order_id = false;

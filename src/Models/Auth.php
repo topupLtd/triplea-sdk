@@ -49,6 +49,7 @@ class Auth {
             return $this->_filterToken($response->getBody());
             
         } catch (GuzzleException $ex) {
+            Logger::make('Triple-A: Authentication error = ', [$ex->getMessage()]);
             throw $ex;
         }
     }
