@@ -4,6 +4,7 @@ namespace Topup\Triplea\Services;
 
 use Exception;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 
 Trait MakePaymentTrait {
 
@@ -122,12 +123,16 @@ Trait MakePaymentTrait {
     private function createSession() {
         $client = new Client();
 
-        $response = $client->post('https://api.triple-a.io/api/v2/payment', [
-            'body'      => $this->makeBody(),
-            'headers'   => $this->makeHeaders()
-        ]);
-
-        return json_decode($response->getBody(), true);
+        try {
+            $response = $client->post('https://api.triple-a.io/api/v2/payment', [
+                'body'      => $this->makeBody(),
+                'headers'   => $this->makeHeaders()
+            ]);
+    
+            return json_decode($response->getBody(), true);
+        } catch (GuzzleException $ex) {
+            throw $ex;
+        }
     }
 
 }
