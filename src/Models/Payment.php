@@ -3,11 +3,12 @@
 namespace Topup\Triplea\Models;
 
 use Exception;
-use Topup\Triplea\Services\MakePaymentTrait;
+use GetPaymentDetailsTrait;
+use Topup\Triplea\Traits\MakePaymentTrait;
 
 class Payment {
 
-    use MakePaymentTrait;
+    use MakePaymentTrait, GetPaymentDetailsTrait;
 
     protected $token;
     protected $success_url;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Topup\Triplea\Services;
+namespace Topup\Triplea\Traits;
 
 use Exception;
 use GuzzleHttp\Client;

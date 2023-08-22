@@ -4,6 +4,7 @@ namespace Topup\Triplea;
 
 use Topup\Triplea\Models\Auth;
 use Topup\Triplea\Models\Payment;
+use Topup\Triplea\Models\PaymentDetails;
 
 class ApiClient {
 
