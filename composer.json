@@ -1,5 +1,5 @@
 {
-    "name": "topup/triplea",
+    "name": "triplea/triplea",
     "description": "Triple A OpenAPI SDK for Laravel",
     "type": "library",
     "license": "MIT",
