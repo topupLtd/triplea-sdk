@@ -119,7 +119,7 @@ $triplea = new  Triplea();
 $response = $triplea->refund->refundDetails('PAYMENT_REFERENCE');
 ```
 
-### Get Refund Details
+### Cancel The Refund request
 ```php
 // use Topup\Triplea\Triplea;
 
