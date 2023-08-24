@@ -9,6 +9,7 @@
             "email": "support@triple-a.io"
         }
     ],
+    "minimum-stability": "dev",
     "require": {
         "php" : "^7.2.5",
         "guzzlehttp/guzzle": "^7.7"
