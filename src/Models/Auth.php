@@ -3,6 +3,7 @@
 namespace Topup\Triplea\Models;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use Topup\Triplea\Logger;
 use Topup\Triplea\Middlewares\GuzzleMiddleware;
@@ -39,7 +40,10 @@ class Auth {
 
     public function getToken() {
 
-        Logger::make('Triple-A: Authenticatino initializing!');
+        Logger::make('Triple-A: Authentication initializing!', [
+            'Headers'   => $this->setHeaders(),
+            'Body'      => $this->setRequestBody()
+        ]);
         
         try {
             $response = $this->client->post('https://api.triple-a.io/api/v2/oauth/token', [
@@ -47,16 +51,29 @@ class Auth {
                 'headers'       => $this->setHeaders()
             ]);
 
+            Logger::make('Triple-A Authentication response: ',[
+                'Code'      => $response->getStatusCode(),
+                'Body'      => $response->getBody(),
+                'Headers'   => $response->getHeaders()
+            ]);
+
             return $this->_filterToken($response->getBody());
             
-        } catch (GuzzleException $ex) {
-            Logger::make('Triple-A: Authentication error = ', [$ex->getMessage()]);
+        } catch (ClientException $ex) {
+
+            Logger::make('Triple-A: Authentication error = ', [
+                'Code'  => $ex->getResponse()->getStatusCode(),
+                'Body' => $ex->getResponse()->getBody(true),
+                'Headers'   => $ex->getResponse()->getHeaders()
+            ]);
+
             throw $ex;
+
+            // return json_decode($ex->getResponse()->getBody(true), $ex->getResponse()->getStatusCode(), true);
         }
     }
 
     public function _filterToken($response) {
-        Logger::make('Triple-A: Authentication response = ', [$response]);
         return json_decode($response, true)['access_token'];
     }
 }

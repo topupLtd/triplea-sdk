@@ -11,7 +11,7 @@ class Logger {
 
     public static function make(string $message, array $values = []) {
         if(self::isEnable())
-            logger($message, $values);
+            logger()->info($message, $values);
     }
 
 }

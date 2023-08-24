@@ -126,7 +126,10 @@ Trait MakePaymentTrait {
     private function createSession() {
         $client = new Client(['handler' => GuzzleMiddleware::handlerStack()]);
 
-        Logger::make('Triple-A: Payment Initialized!');
+        Logger::make('Triple-A: Payment Initialized!', [
+            'body' => $this->makeBody(),
+            'header' => $this->makeHeaders()
+        ]);
 
         try {
             $response = $client->post('https://api.triple-a.io/api/v2/payment', [
@@ -134,12 +137,20 @@ Trait MakePaymentTrait {
                 'headers'   => $this->makeHeaders()
             ]);
     
-            Logger::make('Triple-A: Payment Response = ', [$response->getStatusCode(), $response->getBody()]);
+            Logger::make('Triple-A: Payment Response = ', [
+                'Code'      => $response->getStatusCode(),
+                'Body'      => $response->getBody(),
+                'Headers'   => $response->getHeaders()
+            ]);
 
             return $this->sendResponse($response->getBody(), $response->getStatusCode());
             
         } catch (ClientException $ex) {
-            Logger::make('Triple-A: Payment Error = ', [$ex->getResponse()->getBody(true)]);
+            Logger::make('Triple-A: Payment Error = ', [
+                'Code'  => $ex->getResponse()->getStatusCode(),
+                'Body' => $ex->getResponse()->getBody(true),
+                'Headers'   => $ex->getResponse()->getHeaders()
+            ]);
             return $this->sendResponse($ex->getResponse()->getBody(true), $ex->getResponse()->getStatusCode());
         }
     }

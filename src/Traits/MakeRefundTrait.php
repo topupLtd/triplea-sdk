@@ -59,7 +59,10 @@ trait MakeRefundTrait {
     public function createSession() {
 
         $client = new Client(['handler' => GuzzleMiddleware::handlerStack()]);
-        Logger::make('Triple-A: Refund Init');
+        Logger::make('Triple-A: Refund Init. ', [
+            'body' => $this->makeBody(),
+            'header' => $this->makeHeaders()
+        ]);
 
         try {
             $response = $client->post('https://api.triple-a.io/api/v2/payout/refund/local', [
@@ -68,11 +71,19 @@ trait MakeRefundTrait {
             ]);
 
 
-            Logger::make('Triple-A: Refund response = ', [$response->getBody()]);
+            Logger::make('Triple-A: Refund response = ', [
+                'Code'      => $response->getStatusCode(),
+                'Body'      => $response->getBody(),
+                'Headers'   => $response->getHeaders()
+            ]);
             return $this->sendResponse($response->getBody(), $response->getStatusCode());
 
         } catch (ClientException $ex) {
-            Logger::make('Triple-A: Refund error = ', [$ex->getResponse()->getBody(true)]);
+            Logger::make('Triple-A: Refund error = ', [
+                'Code'  => $ex->getResponse()->getStatusCode(),
+                'Body' => $ex->getResponse()->getBody(true),
+                'Headers'   => $ex->getResponse()->getHeaders()
+            ]);
             return $this->sendResponse($ex->getResponse()->getBody(true), $ex->getResponse()->getStatusCode());
         }
     }
@@ -80,19 +91,27 @@ trait MakeRefundTrait {
 
     public function refundDetails($payout_reference) {
         $client = new Client(['handler' => GuzzleMiddleware::handlerStack()]);
-        Logger::make('Triple-A: Refund Details Calling');
+        Logger::make('Triple-A: Refund Details Calling. Params: ', [$payout_reference]);
 
         try {
             $response = $client->get('https://api.triple-a.io/api/v2/payment/'.$payout_reference.'/refunds', [
                 'headers' => $this->makeHeaders()
             ]);
 
-            Logger::make('Triple-A: Refund details response = ', [$response->getBody()]);
+            Logger::make('Triple-A: Refund details response = ', [
+                'Code'      => $response->getStatusCode(),
+                'Body'      => $response->getBody(),
+                'Headers'   => $response->getHeaders()
+            ]);
             return $this->sendResponse($response->getBody(), $response->getStatusCode());
 
         } catch (ClientException $ex) {
 
-            Logger::make('Triple-A: Refund details error = ', [$ex->getResponse()->getBody(true)]);
+            Logger::make('Triple-A: Refund details error = ', [
+                'Code'  => $ex->getResponse()->getStatusCode(),
+                'Body' => $ex->getResponse()->getBody(true),
+                'Headers'   => $ex->getResponse()->getHeaders()
+            ]);
             return $this->sendResponse($ex->getResponse()->getBody(true), $ex->getResponse()->getStatusCode());
         }
     }
@@ -100,19 +119,27 @@ trait MakeRefundTrait {
 
     public function refundCancel($payout_reference) {
         $client = new Client(['handler' => GuzzleMiddleware::handlerStack()]);
-        Logger::make('Triple-A: Refund cancel Calling');
+        Logger::make('Triple-A: Refund cancel Calling. Params: ', [$payout_reference]);
 
         try {
             $response = $client->put('https://api.triple-a.io/api/v2/payout/refund/'.$payout_reference.'/cancel', [
                 'headers' => $this->makeHeaders()
             ]);
 
-            Logger::make('Triple-A: Refund cancel response = ', [$response->getBody()]);
+            Logger::make('Triple-A: Refund cancel response = ', [
+                'Code'      => $response->getStatusCode(),
+                'Body'      => $response->getBody(),
+                'Headers'   => $response->getHeaders()
+            ]);
             return $this->sendResponse($response->getBody(), $response->getStatusCode());
 
         } catch (ClientException $ex) {
 
-            Logger::make('Triple-A: Refund cancel error = ', [$ex->getResponse()->getBody(true)]);
+            Logger::make('Triple-A: Refund cancel error = ', [
+                'Code'  => $ex->getResponse()->getStatusCode(),
+                'Body' => $ex->getResponse()->getBody(true),
+                'Headers'   => $ex->getResponse()->getHeaders()
+            ]);
             return $this->sendResponse($ex->getResponse()->getBody(true), $ex->getResponse()->getStatusCode());
         }
     }

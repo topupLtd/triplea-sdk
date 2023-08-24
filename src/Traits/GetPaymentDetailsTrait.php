@@ -13,7 +13,7 @@ trait GetPaymentDetailsTrait {
     public function getDetails($payment_reference) {
 
         $client = new Client(['handler' => GuzzleMiddleware::handlerStack()]);
-        Logger::make('Triple-A: Payment Details Init');
+        Logger::make('Triple-A: Payment Details Init, Params: ', [$payment_reference]);
 
         try {
             $response = $client->get('https://api.triple-a.io/api/v2/payment/'.$payment_reference, [
@@ -24,10 +24,21 @@ trait GetPaymentDetailsTrait {
             ]);
 
 
-            Logger::make('Triple-A: Payment Details Response = ', [$response]);
+            Logger::make('Triple-A: Payment Details Response: ', [
+                'Code'      => $response->getStatusCode(),
+                'Body'      => $response->getBody(),
+                'Headers'   => $response->getHeaders()
+            ]);
+
             return $this->sendResponse($response->getBody(), $response->getStatusCode());
         } catch (ClientException $ex) {
-            Logger::make('Triple-A: Payment Details Error = ', [$ex->getResponse()->getBody(true)]);
+
+            Logger::make('Triple-A: Payment Details Error: ', [
+                'Code'  => $ex->getResponse()->getStatusCode(),
+                'Body' => $ex->getResponse()->getBody(true),
+                'Headers'   => $ex->getResponse()->getHeaders()
+            ]);
+            
             return $this->sendResponse($ex->getResponse()->getBody(true), $ex->getResponse()->getStatusCode());
         }
     }
